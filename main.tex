@@ -1,0 +1,277 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX Example: Project Report
+%
+% Source: http://www.howtotex.com
+%
+% Feel free to distribute this example, but please keep the referral
+% to howtotex.com
+% Date: March 2011 
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% How to use writeLaTeX: 
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+% If you're new to LaTeX, the wikibook is a great place to start:
+% http://en.wikibooks.org/wiki/LaTeX
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Edit the title below to update the display in My Documents
+%\title{Project Report}
+%
+%%% Preamble
+\documentclass[paper=a4, fontsize=11pt]{scrartcl}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+
+\usepackage[english]{babel}															% English language/hyphenation
+\usepackage[protrusion=true,expansion=true]{microtype}	
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage[pdftex]{graphicx}	
+\usepackage{url}
+\usepackage[titletoc,title]{appendix}
+\usepackage[boxruled ]{algorithm2e}
+\usepackage{listings}
+
+
+%%% Custom sectioning
+\usepackage{sectsty}
+%\allsectionsfont{\centering \normalfont\scshape}
+\allsectionsfont{\normalfont\scshape}
+
+
+%%% Custom headers/footers (fancyhdr package)
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead{}											% No page header
+\fancyfoot[L]{}											% Empty 
+\fancyfoot[C]{}											% Empty
+\fancyfoot[R]{\thepage}									% Pagenumbering
+\renewcommand{\headrulewidth}{0pt}			% Remove header underlines
+\renewcommand{\footrulewidth}{0pt}				% Remove footer underlines
+\setlength{\headheight}{13.6pt}
+
+%%% Equation and float numbering
+\numberwithin{equation}{section}		% Equationnumbering: section.eq#
+\numberwithin{figure}{section}			% Figurenumbering: section.fig#
+\numberwithin{table}{section}				% Tablenumbering: section.tab#
+
+
+%%% Maketitle metadata
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 	% Horizontal rule
+
+\title{
+		%\vspace{-1in} 	
+		\usefont{OT1}{bch}{b}{n}
+		\normalfont \normalsize \textsc{Technical Report} \\ [25pt]
+		\horrule{0.5pt} \\[0.4cm]
+		\huge Acculocate Perforation Range Workflow \\
+		\horrule{2pt} \\[0.5cm]
+}
+\author{
+		\normalfont 								\normalsize
+        Scott V. Nguyen, PhD\\[-3pt]		\normalsize
+        \today
+}
+\date{}
+
+
+
+%%% Begin document
+\begin{document}
+\maketitle
+\section{Introduction}
+This document describes the workflow to estimate the angular bounds to prevent damage to cable and instrumentation deployed outside casing during perforation operations.  The workflow was developed in coordination with Shell's fiber optic deployment team and based on work completed in the development of the Acculocate technology.  
+
+\subsection{Background}
+The instrumentation of a well with sensors such as fiber optic cables is critical to understand, control, and optimize production.  However, perforating the casing risks damaging cables that are deployed behind casing.  The current industry practice is to deploy cable along side ferromagnetic material such as steel wire rope or the Acculocate technology and use magnetic orientation tools to locate the ferromagnetic material and thus the angular position of the cable behind the casing.  
+
+\paragraph{}
+In developing the Acculocate technology, we discovered that the reported angle can be biased by environmental factors and is not necessarily the true cable location.  This background signal can be characterized by making measurements on the casing without the cable attached.  The main factors influencing the background signal are how much the tool is off-centered and wall thickness variations.  The degree of angular error depends on the relative strength of the cable and background signals as measured by the magnetic orientation tool.  A theoretical model was developed to account for the effect of this background on the measured signal and can be used to estimate the angular bounds of the cable.  The theoretical model is detailed in Appendix X.
+
+\subsection{Workflow objective}
+The objectives of the workflow outlined in this document are:
+\begin{enumerate}
+    \item Determine a suitable Acculocate cable design
+    \item Acquire the necessary data to evaluate the likelihood of meeting the specified phasing requirements for the perforation job
+    \item Guide the decision for orienting the perforations.
+\end{enumerate}
+More specifically, the workflow estimates the uncertainty in the cable position caused by the background to give a higher confidence in setting damage-free perforation angles.  The workflow is detailed step by step and follows the flow chart in Fig. \ref{fig:flowchart}.  The output of the workflow is the "no perforation zone" (NPZ) which is the estimated angular bounds of the cable position.  Fig. \ref{fig:well_schematic} shows a schematic of the NPZ.
+
+\paragraph{}
+The workflow include calculations, cable selection, yard test calibrations, and in well measurements.  A template spreadsheet is provided for recording the measurements and performing the calculations.  The workflow is applicable for both point and shoot and map and shoot jobs.      
+
+\begin{figure}[h!]
+    \caption{Flow chart of the workflow to determine the no perforation zone.}
+    \label{fig:flowchart}
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/flow_chart.pdf}
+\end{figure}
+
+\begin{figure}[ht!]
+    \caption{Schematic of the cable/casing configuration with the identified "no perforation zone" (NPZ).}
+    \label{fig:well_schematic}
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/well_schematic.pdf}
+\end{figure}
+
+\section{Step 1: Identify well parameters}
+\label{step_1}
+The workflow begins by identifying the well parameters and perforation job requirements.  Below is a list of the parameters that influence the NPZ.
+
+\begin{enumerate}
+	\item Well orientation - Depending on the method used in the magnetic orientation tool to determine tool orientation, the measured relative bearing is only accurate when the well deviates from vertical.  The motor bearing angle should be used with caution as there is significant angular slip with each rotation. 
+	\item Casing material - The signal strength of the tool is influenced by the magnetic properties of the casing.  As a rule of thumb, the measured signal is stronger with carbon steel casing than 13Cr casing.
+	\item Casing dimensions - The casing diameter and wall thickness influences the measured signal.  As a rule of thumb, the measured signal is stronger in smaller diameter casing and thinner walls.
+	\item Magnetic orientation tool - Though the three main tools (WPP, DC-MOT, and Halliburton) have similar operating principles, the tool operating parameters may be different and will lead to diffent measured signals.
+	\item Perforating mode - Is the perforating job point and shoot or map and shoot.  Map and shoot mode can be post-processed to provide a tigher NPZ.
+	\item Perforating phasing requirement - Smaller phasing requirements such as 60\textsuperscript{o} phasing require stronger cable signals and lower background signals.  
+	\item Available centralizers - Centralization of the tool heavily influences the background signal.  Properly sized centralizers that include rollers help minimize the background signal.  
+\end{enumerate}
+
+\section{Step 2: Determine required SG/BG}\label{section:required_sgbg}
+The phasing requirements sets a minimum cable signal to background ratio (SG/BG) that must be achieved to ensure high confidence in not damaging the cable.  Based on the phasing requirement specified in section \ref{step_1}, use the graph shown in Fig. \ref{fig:max_error_graph} to identify the target minimum SG/BG needed.  The graph is based on the theoretical model described in the appendix.  An additional safety factor can be applied to account for variations in measurement parameters.  Note that if SG/BG is less than 1, the maximum angular error is $\pm$180\textsuperscript{o} which means the probability to damage the cable during perforations is completely random.  
+
+\begin{figure}[h!]
+    \caption{Graph showing the maximum error in the cable position as a function of the cable signal to background ratio.  The inset zooms in on the error range up to 90\textsuperscript{o}.}
+    \label{fig:max_error_graph}
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/max_error_vs_sgbg.pdf}
+\end{figure}
+
+\paragraph{}
+\textbf{Example:} If 60\textsuperscript{o} phasing is required, the maximum allowable angular error is $\pm$ 30\textsuperscript{o}.  Based on the graph, $\pm$ 30\textsuperscript{o} corresponds to an SG/BG=2.  Applying a 1.2 safety factor yields a mimimum target SG/BG of 2.4.
+
+\section{Step 3: Identify Acculocate Cable Options}
+Next, identify 1 to 2 Acculocate cable options.  Fig. \ref{fig:cables} shows examples of Acculocated cable designs.  Below is a list of design factors that increase the measured cable strength.  If available, refer to data from previous measurements of the same cable and similar well parameters to aid the selection. 
+
+\begin{enumerate}
+    \item Higher magnetic permeability material - Steel wire rope relies on the magnetic permeability of worked steel which is not very high.  The Acculocate technology deploys grain oriented electrical steel (GOES) strips which has significantly higher magnetic permeability along side structural steel bars (LPC design).  
+    \item More layers of GOES strips - Adding additional layers of GOES strips improves signal.  However, mechanical issues arising from coiling multiple strips may arise.  Current Acculocate designs use 1 to 2 layers.
+    \item Wider GOES strips - Increasing the width of the GOES strips improves signal but there is a a point of diminishing returns.  Current Acculocate designs use 0.5" to 0.75" wide strips.
+\end{enumerate}
+
+\begin{figure}[h!]
+    \centering
+    \caption{Examples of Acculocate cable designs that incorporate LPC with GOES strips.}
+    \includegraphics[width=1.0\textwidth]{figures/acculocate_cables.pdf}
+    \label{fig:cables}
+\end{figure}
+
+\section{Step 4: Conduct Yard Test}
+
+\subsection{Testing overview}
+Because there is currently limited data on both cable and background strength across the many parameters that influence the measurement, we recommend conducting a controlled yard test to determine the adequacy of the Acculocate cable to meet the phasing requirements of the perforation job.  Testing should be done prior to the perforation job and replicate the well conditions as close as possible.  Testing generally lasts 1 full day.  The measured span and angle can be recorded in the template spreadsheet.  It's good practice to also obtain PDF and LAS files of the tool output logs.  If possible, create individual LAS files for each test condition.  
+
+\subsection{Equipment needed}
+The following equipment is needed for the test.  
+
+\begin{enumerate}
+    \item 40 feet of each Acculocate cable option
+    \item Magnetic orientation tool and operating crew
+    \item 1-2 joints of casing
+    \item Selected centralizers
+    \item Crane
+    \item Pipe stands
+    \item Duct tape
+    \item Marker
+\end{enumerate}
+
+\begin{figure}[h!]
+    \centering
+    \caption{The measurements steps and corresponding cable positions for the yard test}
+    \includegraphics[width=1.0\textwidth]{figures/calibration_steps.pdf}
+    \label{fig:calibration_steps}
+\end{figure}
+
+\subsection{Testing protocol}
+\begin{enumerate}
+    \item With both joints on the pipe stands, identify and mark the midpoint along the length of the two joints.
+    \item Insert the tool with the centralizers into joint 1 such that the measurement location matches with the marked midpoint.  No cables should be attached to the casing at this point.
+    \item Raise the casing to the specified well angle.
+    \item Perform measurement and note measured span and angle in template spreadsheet under Test {\#}1 (Fig.\ref{fig:calibration_steps}).  Mark the measured angle on the OD of the casing as 0\textsuperscript{o}.  This is the heavy side.  
+    \item Continue to circumfrentially mark the OD of the casing at 45\textsuperscript{o}, 120\textsuperscript{o}, and 180\textsuperscript{o} relative to 0\textsuperscript{o}.
+    \item Rotate the casing such that 0\textsuperscript{o} is oriented at the top (heavy side and high side coinciding.)
+    \item Repeat measurement and note measured span and angle under Test {\#}2.
+    \item Lower casing and attached cable to the casing along its full length  at 0\textsuperscript{o}.  Secure with duct tape.
+    \item Raise the casing to the well angle with 0\textsuperscript{o} oriented at the top. Repeat measurement and note measured span and angle under Test {\#}3.
+    \item Move and secure cable at 45\textsuperscript{o}.  Repeat measurement and note measured span and angle under Test {\#}4.
+    \item Move and secure cable at 120\textsuperscript{o}.  Repeat measurement and note measured span and angle under Test {\#}5.
+    \item Move and secure cable at 180\textsuperscript{o}.  Repeat measurement and note measured span and angle under Test {\#}6.
+    \item Remove the cable and remeasure the blank casing (background) with 0\textsuperscript{o} oriented at the top.
+    \item Repeat cable measurement set with other Acculocate cable options or centralizers.
+    \item If time allows, repeat full measurement set on joint \#2.
+\end{enumerate}
+
+\section{Step 5: Calculate Cable Signal}\label{section:step_5}
+Using these measurements from the yard test, we can calculate the cable and background signal strength along with SG/BG.  The spreadsheet template does the calculation with the entered measurements and estimates upper and lower bounds for SG/BG. 
+
+\paragraph{}
+The background signal value is an average of blank casing measurements.  The cable signal strength is calculated for each measurement using
+\begin{equation}
+    s = m \cos\left(\theta_s-\theta_m\right) - b\cos\left( \theta_s-\theta_b\right)
+\end{equation}
+
+where 
+\begin{align*}
+    s &= \text{cable signal amplitude}\\
+    b &= \text{background signal amplitude}\\
+    m &= \text{measured signal amplitude}\\
+    \theta_s &= \text{cable angle}\\
+    \theta_b &= \text{background angle}\\
+    \theta_m &= \text{measured angle.}\\
+\end{align*}
+
+\paragraph{}
+The upper and lower bounds for SG/BG are calculated based on the variation of the signal from the different cable locations.  Because of the limited data set, this is by no means meant to be statistically significant upper and lower bounds.  It is simply an estimate based on the current measurement set.  If a statistically significant amount of data is eventually collected, a proper statistical approach could be implemented.  This is described in Appendix X.
+
+\paragraph{}
+The estimated lower bound for SG/BG must now be compared to the target SG/BG from Section \ref{section:required_sgbg}.  If the lower bound for SG/BG is below the target SG/BG, a higher performance Acculocate cable and/or better centralizer should be chosen.  The yard test should be repeated with the new cable and centralizer configuration. 
+
+\paragraph{}
+If a selecting a new cable or centralizer is not feasible, there are two alternatives: 
+\begin{enumerate}
+    \item Relax the phasing requirement.  Use Fig. \ref{fig:max_error_graph} to determine the maximum angular error for the estimated lower bound of SG/BG.  The maximum angular error is also calculated within the template spreadsheet for the estimated SG/BG lower bound.  For example, if the lower bound is 1.2, the maximum error is $\pm$55\textsuperscript{o} which suggests using only 120\textsuperscript{o} phasing to ensure not damaging the cable.
+    \item The actual in well NPZ may be less than the maximum angular error.  However this is not known apriori.  Following the in well measurements and calculation of the actual NPZ, final perforating decisions may be made.  
+\end{enumerate}
+
+\section{Step 6: In well measurement}
+Based on the results of the yard test and calculations, the selected Acculocate cable should be deployed with the casing.  When the perforating jobs are scheduled, the same magnetic orientation tool, measurement parameters, and centralizers from the yard test should also be used.  At each measurement depth, record the measured span and angle.  They can be recorded in the template spreadsheet.  If possible, also acquire the LAS file for each measurement depth.  Note if the measurement depth is near a collar.  They can significantly impact the measurement, increasing the uncertainty of the cable location.  
+
+\section{Step 7: Calculate no perforation zone}
+With the measured span and angle, the NPZ can be calculated using Eq.\ref{eq:theta_solution}.  This calculation is provided within the template spreadsheet.  This will be $\pm$ of the measured angle, and its range may be less than the maximum angular error calculated in Step 5.  The perforations should then be directed away from the calculated NPZ. 
+
+\paragraph{}
+\textbf{Example:} Given a measured cable and background signal from the yard test of ${2183\pm614}$ and ${900\pm82}$, respectively, and an in well measured span and angle of 2000 and 45\textsuperscript{o}, respectively, the estimated NPZ is 16-74\textsuperscript{o}.  The perforations should be oriented away from this 16-74\textsuperscript{o} angular range.
+
+\paragraph{}
+For point and shoot jobs, this calculation can be part of the jobsite workflow and immediately guide the perforation orientation.  For map and shoot jobs, post-job processing can further reduce the range of the NPZ.  This relies on correlating measurements from multiple depths to reduce noise in the measurement.  The map and shoot post-processing can be performed as follows (Fig.\ref{fig:map_shoot}):
+\begin{enumerate}
+    \item Plot measured span and angle as a function of depth (log orientation).
+    \item Remove outliers, many of which will be near the collars
+    \item Fit the remaining data points for span and angle to a linear function vs depth
+    \item Calculate the $\pm$ NPZ bearing correction based off the beginning and end of the linear fits.
+    \item Apply the $\pm$ NPZ bearing correction to the linear fit to create an NPZ band as a function of depth.
+\end{enumerate}
+
+\begin{figure}[h!]
+    \caption{Plot representing the steps to post-process map and shoot data to generate NPZ bands as a function of depth.}
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/map_shoot.pdf}
+    \label{fig:map_shoot}
+\end{figure}
+
+
+
+
+
+
+%%% End document
+\end{document}
