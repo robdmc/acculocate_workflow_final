@@ -39,7 +39,8 @@
 \usepackage[titletoc,title]{appendix}
 \usepackage[boxruled ]{algorithm2e}
 \usepackage{listings}
-
+\usepackage{bm}
+\usepackage{gensymb}
 
 %%% Custom sectioning
 \usepackage{sectsty}
@@ -267,6 +268,166 @@ For point and shoot jobs, this calculation can be part of the jobsite workflow a
     \includegraphics[width=1.0\textwidth]{figures/map_shoot.pdf}
     \label{fig:map_shoot}
 \end{figure}
+
+
+\begin{appendices}
+
+
+
+
+\section{Estimating the Bearing Correction}
+\subsection{The Bearing Correction}
+The signal measured within the pipe will vary as a function of angle.  We can break down the source of this signal into two components.  The first component we will call the ``cable signal.''  This is the signal variation caused by the presence of the cable attached to the outside of the pipe.  The second component we will call the ``background signal,'' which arises from all other sources of angular asymmetry in the system.  This is thought to be dominated by imperfect centering of the instrument within the pipe.
+
+\par We model both the background and the cable signals as if they were sinusoidal function. The total measured signal is then given by
+
+\begin{equation} \label{eq:trig_sig}
+    s = C \sin\left(\theta + \phi_c\right) + B \sin\left(\theta + \phi_b\right),
+\end{equation}
+where
+\begin{align*}
+        S &= \text{total signal amplitude} \\
+        C &= \text{cable signal amplitude} \\
+        B &= \text{background signal amplitude.} \\
+        \phi_c &= \text{The phase of the cable signal}\\
+        \phi_b &= \text{The phase of the background signal}\\
+\end{align*}
+
+We will arbitrarily construct an example model where we set $C=1$, $B=.25$, $\phi_c=1$, and $\phi_b=135\degree$. Figure \ref{fig:sigs_vs_bearing} shows this model plotted as a function of bearing angle.
+\begin{figure}
+  \caption{An Example Model.  In this example, we arbitrarily choose amplitudes and phases for the cable and background components such that  $s = \sin\theta + 0.25 \sin\left(\theta -135\degree\right)$
+  }
+  \label{fig:sigs_vs_bearing}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/sigs_vs_bearing.pdf}
+\end{figure}
+
+Although a plot of amplitude vs angle is useful, a better way of visualizing the problem is to transform it to a phasor representation.  To do this, recall that
+\begin{align}
+        \cos{\theta} &= Re\left(e^{i\theta}\right) \\
+        \sin{\theta} &= Im\left(e^{i\theta}\right). \\
+\end{align}
+This lets us visualize the components of the measured signal as if they were two-dimensional vectors (i.e. phasors) in the complex plane. Fig. \ref{fig:phasor_base} shows our example problem visualized with phasors.
+\begin{figure}
+  \caption{
+  The phasor representation of the example model from Figure \ref{fig:sigs_vs_bearing}. $s$ is the cable-signal phasor, $b$ the background phasor and $m$ the measured phasor.  The value we really care about is $\theta$, the angle between the measured and cable signals.  Note that we can only determine the magnitude of the angle, but not the sign.  The phasor relationships shown in solids lines are indistinguishable from those shown by the dashed lines.  This model provides no information for distinguishing between the $\pm\theta$ solutions}
+  \label{fig:phasor_base}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/phasor_base.pdf}
+\end{figure}
+Our objective is to find the bearing correction that must be applied to the measured signal in order to arrive at the true cable signal. In this representation, the correction angle, $\theta$ is readily obtained from the law of cosines.
+\begin{equation} \label{eq:law_of_cos}
+    \cos\left(\theta\right) = \frac{m^2 + s^2 - b^2}{2ms}
+\end{equation}
+But since $\cos\left(\cdot\right)$ is an even function of its argument, we are unable to distinguish between solutions having positive and negative $\theta$.  So our solution becomes
+
+\begin{equation} \label{eq:theta_solution}
+\theta = \pm \cos^{-1}\left(\frac{m^2 + s^2 - b^2}{2ms}\right)
+\end{equation}
+where
+\begin{align*}
+        \theta &= \text{The angle between the measured and cable signals}\\
+        s &= \text{cable signal amplitude.}\\
+        b &= \text{background signal amplitude} \\
+        m &= \text{measured signal amplitude} \\
+\end{align*}
+
+
+\subsection{Placing Bounds on the Bearing Correction Angle}
+Here is where I do a bunch of explanation about Figure \ref{fig:theta_limits}.
+
+
+\begin{figure}
+  \caption{This will show the limits}
+  \label{fig:theta_limits}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/phasor_base.pdf}
+\end{figure}
+
+
+
+
+\subsection{Valid Solutions} \label{section:validity}
+If the only information available from the system were the measured signal, there would be no way to uniquely identify what the correction angle.  This is because (referring to Figure \ref{fig:phasor_base}) there are infinitely many combinations of $s$, $b$, and $\theta$ that all generate exactly the same measured signal. We are not, however, free to pick any combination of $s$, $b$, and $\theta$.  The values we pick must be able to form a triangle in phasor space.  To get a feel for these constraints, we can rearrange equation \ref{eq:law_of_cos} to the form
+\begin{equation}
+    b^2 = m^2 + s^2 - 2 m s \cos\left(\theta\right).
+\end{equation}
+In this form it is easy to see that, for fixed $m$ and $s$, the value of $b$ must be in the range
+
+\begin{equation*}
+      m^2 + s^2 - 2 m s \leq b ^ 2 \leq  m^2 + s^2 + 2 m s
+\end{equation*}
+or
+\begin{equation} \label{eq:bounds}
+      \left(m-s\right)^2 \leq b ^ 2 \leq \left(m + s\right)^2.  
+\end{equation}
+Any combination of $m$, $s$ and $b$ that satisfy equation \ref{eq:bounds} is a valid solution to the phasor triangle and will have a unique value for $\cos\left(\theta\right)$.  But again, since $\cos\left(\cdot\right)$ is an even function, we are only able to determine $\theta$ up to a sign.
+    
+\section{Statistical Treatment}
+The last two sections have shown that if we only know the measured signal, there are infinitely many combinations of background and cable signal strengths that could have resulted in that measurement.  This, of course, assumed we had absolutely no knowledge of how big we expected the background and cable signals to be.  We now allow ourselves to apply additional constraints to our problem by specifying a range of plausible values for the background and cable signals.  In practice, these plausibility ranges are determined by conducting calibration runs of the pipe and cable we are working with.  In the calibration runs, we can take many measurements of the pipe with no cable attached.  These measurements will give us a sense of the range we can expect for the background signal.  Similarly, we can carefully set up a calibration run where we deliberately configure the system to have negligible background.  In this configuration, we can measure different cable attachments to get a sense of the range we can expect for the cable signal.  We can characterize these ranges as being statistical distributions with a given mean, $\mu$, and standard deviation, $\sigma$. There are any number of statistical distributions we could use, but here we select the gamma distribution.  Our primary motivation for selecting the Gamma distribution is that, like the amplitudes we are modeling, it is only defined for positive values.  We could have chosen any other distribution with this property, but the Gamma distribution is well understood and widely used. 
+
+\par Our approach will be to use a Monte-Carlo simulation for obtaining a probability distribution of the correction angle given the distributions determined by the mean and standard deviations we specify for both the expected cable and background signals.
+
+Algorithm \ref{monte_algo} for sampling the bearing correction angle is summarized as follows.  We specify the distributions for the cable and background signals by defining their mean and standard deviations.  We then iterate the following process:  Draw samples from the cable and background distribution.  If those draws satisfy the triangle constraints, they are feasible, so compute the correction angle for them and include the result as a sample.  
+
+By running many thousands of iterations of this simulation for a given measured signal, we can generate a histogram of the possible correction angles.  Fig. XXX shows such a histogram.
+
+\begin{figure}
+  \caption{Histogram of monte-carlo sampling}
+  \label{fig:correction_hist}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/correction_hist.pdf}
+\end{figure}
+
+
+% \lstinputlisting[language=Python]{monte_car}
+
+
+\begin{algorithm}[H] \label{monte_algo}
+\SetAlgoLined
+\KwResult{Random samples drawn from distribution of bearing correction angles }
+ $m \gets$ input the measured signal amplitude\;
+ $\mu_s \gets$ input the cable signal mean\;
+ $\sigma_s \gets$ input the cable signal standard deviation\;
+ $\mu_b \gets$ input the background mean\;
+ $\sigma_b \gets$ input the background standard deviation\;
+ $N \gets$ input the desired number of samples\;
+ $M \gets$ the maximum iterations for finding a triangle solution\;
+ $n \gets 0$\;
+ $\bm{\theta} \gets$ An array of length $N$\;
+ $n \gets 0$\;
+ \While{n < N}{
+     $i\gets0$\;
+     $keepon \gets$ true\;
+     \While{$i < M \And  keepon$}{
+          $s \gets$ Draw random value from cable signal distribution\;
+          $b \gets$ Draw random value from background signal distribution\;
+          \uIf{$\left(m-s\right)^2 \leq b ^ 2 \leq \left(m + s\right)^2$}{
+              $u \gets$ Draw randomly from $\left[-1, 1\right]$ with equal probability\; 
+              $\bm{\theta}\left[n\right] \gets u \cos^{-1}\left(\frac{m^2 + s^2 - b^2}{2ms}\right)$\;
+              $n = n + 1$\;
+              $keepon\gets$ false\;
+          }
+          \Else{
+              $keepon\gets$ true\;
+          }
+          $i \gets i + 1$\;
+     }
+     \If{$i = M$}{
+         $\text{Raise an error indicating that no triangle solutions could be found}$\;
+     }
+
+ }
+ \caption{Bearing correction Monte-Carlo sampling.}
+\end{algorithm}
+
+
+
+
+\end{appendices}
+
+
+
 
 
 
