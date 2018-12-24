@@ -436,21 +436,7 @@ Here is some code
 from scipy.stats import gamma, bernoulli
 import numpy as np
 
-def bplus(s, m):
-    return np.abs(m + s)
-
-def bminus(s, m):
-    return np.abs(m - s)
-
 def sample_amplitude(mu: float, sigma: float, N: int):
-    """
-    Draw samples from a model of either the signal or the
-    background amplitude distribution.
-    Args:
-        mu: the mean value of the amplitude model
-        sigma: the standard deviation of the amplitude model
-        N: the number of random points to generate
-    """
     # Compute the gamma parameters that will have the desired
     # mean and standard deviation
     a = (mu / sigma) ** 2
@@ -460,9 +446,7 @@ def sample_amplitude(mu: float, sigma: float, N: int):
     gam = gamma(a, scale=scale)
     x = gam.rvs(size=N)
     return x
-\end{python}
-\pagebreak
-\begin{python}
+
 def sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100):
     x_list = []
     n_samples = N
@@ -470,11 +454,8 @@ def sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100):
     while n_samples > 0 and n_iter < max_iter:
         signal = sample_amplitude(sig_mu, sig_std, n_samples)
         background = sample_amplitude(back_mu, back_std, n_samples)
-        
-        
         numerator = measured ** 2 + signal ** 2 - background ** 2
         denominator = 2 * measured * signal
-        
         ratio = numerator / denominator
         ratio = ratio[ratio < 1]
         theta_abs = np.arccos(ratio)
@@ -501,7 +482,6 @@ N = 100000
 
 # Generate the samples
 samples = sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100)
-
 \end{python}
 
 
