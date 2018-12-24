@@ -41,6 +41,7 @@
 \usepackage{listings}
 \usepackage{bm}
 \usepackage{gensymb}
+\usepackage{float}
 
 %%% Custom sectioning
 \usepackage{sectsty}
@@ -138,7 +139,8 @@ The workflow begins by identifying the well parameters and perforation job requi
 \end{enumerate}
 
 \section{Step 2: Determine required SG/BG}\label{section:required_sgbg}
-The phasing requirements sets a minimum cable signal to background ratio (SG/BG) that must be achieved to ensure high confidence in not damaging the cable.  Based on the phasing requirement specified in section \ref{step_1}, use the graph shown in Fig. \ref{fig:max_error_graph} to identify the target minimum SG/BG needed.  The graph is based on the theoretical model described in the appendix.  An additional safety factor can be applied to account for variations in measurement parameters.  Note that if SG/BG is less than 1, the maximum angular error is $\pm$180\textsuperscript{o} which means the probability to damage the cable during perforations is completely random.  
+The phasing requirements sets a minimum cable signal to background ratio (SG/BG) that must be achieved to ensure high confidence in not damaging the cable.  Based on the phasing requirement specified in section \ref{step_1}, use the graph shown in Fig. \ref{fig:max_error_graph} to identify the target minimum SG/BG needed.  The graph is based on the theoretical model described in Eq. \ref{eq:angle_limits} of the appendix.  An additional safety factor can be applied to account for variations in measurement parameters.  Note that, as shown in Section \ref{section:angle_bounds} of the appendix, if $SG/BG<1$, the maximum angular error is $\pm180\degree$, which means the probability to damage the cable during perforations is completely random.  
+
 
 \begin{figure}[h!]
     \caption{Graph showing the maximum error in the cable position as a function of the cable signal to background ratio.  The inset zooms in on the error range up to 90\textsuperscript{o}.}
@@ -293,8 +295,8 @@ where
         \phi_b &= \text{The phase of the background signal}\\
 \end{align*}
 
-We will arbitrarily construct an example model where we set $C=1$, $B=.25$, $\phi_c=1$, and $\phi_b=135\degree$. Figure \ref{fig:sigs_vs_bearing} shows this model plotted as a function of bearing angle.
-\begin{figure}
+
+\begin{figure}[H]
   \caption{An Example Model.  In this example, we arbitrarily choose amplitudes and phases for the cable and background components such that  $s = \sin\theta + 0.25 \sin\left(\theta -135\degree\right)$
   }
   \label{fig:sigs_vs_bearing}
@@ -302,13 +304,16 @@ We will arbitrarily construct an example model where we set $C=1$, $B=.25$, $\ph
   \includegraphics[width=1.0\textwidth]{figures/sigs_vs_bearing.pdf}
 \end{figure}
 
+We will arbitrarily construct an example model where we set $C=1$, $B=.25$, $\phi_c=1$, and $\phi_b=135\degree$. Figure \ref{fig:sigs_vs_bearing} shows this model plotted as a function of bearing angle.
+
 Although a plot of amplitude vs angle is useful, a better way of visualizing the problem is to transform it to a phasor representation.  To do this, recall that
 \begin{align}
         \cos{\theta} &= Re\left(e^{i\theta}\right) \\
         \sin{\theta} &= Im\left(e^{i\theta}\right). \\
 \end{align}
 This lets us visualize the components of the measured signal as if they were two-dimensional vectors (i.e. phasors) in the complex plane. Fig. \ref{fig:phasor_base} shows our example problem visualized with phasors.
-\begin{figure}
+
+\begin{figure}[h]
   \caption{
   The phasor representation of the example model from Figure \ref{fig:sigs_vs_bearing}. $s$ is the cable-signal phasor, $b$ the background phasor and $m$ the measured phasor.  The value we really care about is $\theta$, the angle between the measured and cable signals.  Note that we can only determine the magnitude of the angle, but not the sign.  The phasor relationships shown in solids lines are indistinguishable from those shown by the dashed lines.  This model provides no information for distinguishing between the $\pm\theta$ solutions}
   \label{fig:phasor_base}
@@ -333,14 +338,20 @@ where
 \end{align*}
 
 
-\subsection{Placing Bounds on the Bearing Correction Angle}
-In this section we will show that the ratio of cable-signal to background-signal, ($s/b$) is the most important figure of merit for putting limits on the bearing correction angle.  We will prove that the bearing angle can be limited only in the case where the cable signal is larger than the background signal, $s > b$.  The larger this ratio, the tighter limits can be placed on the bearing correction angle.  For the case where the background exceeds the cable signal, $b > s$, the bearing correction angle is unrestricted and can take on any value between $0\degree$ and $360\degree$.
+\subsection{Placing Bounds on the Bearing Correction Angle}\label{section:angle_bounds}
+In this section we will show that the ratio of cable-signal to background-signal, ($s/b$) is the most important figure of merit for putting limits on the bearing-correction angle. The larger this ratio, the tighter the limits that can be placed on the bearing correction angle. We will further prove that there is no limit on the bearing-correction angle when $s/b < 1$.
 
 
-Here is where I do a bunch of explanation about Figure \ref{fig:angle_limits}.
 
 
-\begin{figure}
+Figure \ref{fig:angle_limits} shows phasor diagrams for two different configurations superimposed on each other.  The phasors drawn with solid lines represent a configuration where $s>b$.  The measurement phasor is given by the phasor sum, $m=s+b$.  Since $\alpha$, the angle between $s$ and $b$, can take on any value, the tip of the measurement phasor,  $m$, can lie anywhere on the the solid circle.  In this configuration, the bearing correction angle, $\theta$ is maximized when the measurement phasor, $m$ is tangent to the circle.  By inspecting the diagram and applying trigonometry we arrive at an expression that places limits on the bearing-correction angle, 
+\begin{equation} \label{eq:angle_limits}
+    \left| \theta \right| \leq \sin^{-1}\left(\frac{b}{s}\right).
+\end{equation}
+
+The phasors drawn with dashed lines represent a configuration for $b > s$.  In this case the tip of the measurement vector can lie anywhere on the larger dashed circle.  As can be seen, this allows the bearing-correction angle, $\theta$ to be free to take on any value between $0\degree$ and $360\degree$.
+
+\begin{figure}[H]
   \caption{The phasor sums for two different conditions are shown here, one with solid lines, and the other with dashed lines.  In each case, the measured signal ($m$) is the phasor sum of the cable ($s$) and the background ($b$) signals. The angle between the cable and background signals ($\alpha$) can range between $0\degree$ and $360\degree$.  The solid circle represents the locus of all points reachable for fixed $b$ and $s$ when $b < s$.  $\theta$ is maximized when the measurement vector ($m$) is tangent to the circle.  The dashed circle shows the case for $b > s$.  Under these circumstances, there is no limit on $\theta$, which is free to range from  $0\degree$ and $360\degree$. 
   }
   \label{fig:angle_limits}
