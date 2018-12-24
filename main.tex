@@ -334,14 +334,18 @@ where
 
 
 \subsection{Placing Bounds on the Bearing Correction Angle}
-Here is where I do a bunch of explanation about Figure \ref{fig:theta_limits}.
+In this section we will show that the ratio of cable-signal to background-signal, ($s/b$) is the most important figure of merit for putting limits on the bearing correction angle.  We will prove that the bearing angle can be limited only in the case where the cable signal is larger than the background signal, $s > b$.  The larger this ratio, the tighter limits can be placed on the bearing correction angle.  For the case where the background exceeds the cable signal, $b > s$, the bearing correction angle is unrestricted and can take on any value between $0\degree$ and $360\degree$.
+
+
+Here is where I do a bunch of explanation about Figure \ref{fig:angle_limits}.
 
 
 \begin{figure}
-  \caption{This will show the limits}
-  \label{fig:theta_limits}
+  \caption{The phasor sums for two different conditions are shown here, one with solid lines, and the other with dashed lines.  In each case, the measured signal ($m$) is the phasor sum of the cable ($s$) and the background ($b$) signals. The angle between the cable and background signals ($\alpha$) can range between $0\degree$ and $360\degree$.  The solid circle represents the locus of all points reachable for fixed $b$ and $s$ when $b < s$.  $\theta$ is maximized when the measurement vector ($m$) is tangent to the circle.  The dashed circle shows the case for $b > s$.  Under these circumstances, there is no limit on $\theta$, which is free to range from  $0\degree$ and $360\degree$. 
+  }
+  \label{fig:angle_limits}
   \centering
-  \includegraphics[width=1.0\textwidth]{figures/phasor_base.pdf}
+  \includegraphics[width=1.0\textwidth]{figures/angle_limits.pdf}
 \end{figure}
 
 
