@@ -273,16 +273,23 @@ For point and shoot jobs, this calculation can be part of the jobsite workflow a
 \end{figure}
 
 
+
+
+
+
+
+
+
+
+
+
 \begin{appendices}
-
-
-
 
 \section{Estimating the Bearing Correction}
 \subsection{The Bearing Correction}
 The signal measured within the pipe will vary as a function of angle.  We can break down the source of this signal into two components.  The first component we will call the ``cable signal.''  This is the signal variation caused by the presence of the cable attached to the outside of the pipe.  The second component we will call the ``background signal,'' which arises from all other sources of angular asymmetry in the system.  This is thought to be dominated by imperfect centering of the instrument within the pipe.
 
-\par We model both the background and the cable signals as if they were sinusoidal function. The total measured signal is then given by
+\par We model both the background and the cable signals as if they are sinusoidal functions. The total measured signal is then given by
 
 \begin{equation} \label{eq:trig_sig}
     s = C \sin\left(\theta + \phi_c\right) + B \sin\left(\theta + \phi_b\right),
@@ -292,20 +299,20 @@ where
         S &= \text{total signal amplitude} \\
         C &= \text{cable signal amplitude} \\
         B &= \text{background signal amplitude.} \\
-        \phi_c &= \text{The phase of the cable signal}\\
-        \phi_b &= \text{The phase of the background signal}\\
+        \phi_c &= \text{the phase of the cable signal}\\
+        \phi_b &= \text{the phase of the background signal}\\
 \end{align*}
 
 
 \begin{figure}[H]
-  \caption{An Example Model.  In this example, we arbitrarily choose amplitudes and phases for the cable and background components such that  $s = \sin\theta + 0.25 \sin\left(\theta -135\degree\right)$
+  \caption{An example model.  In this example, we arbitrarily choose amplitudes and phases for the cable and background components such that  $s = \sin\theta + 0.25 \sin\left(\theta -135\degree\right)$
   }
   \label{fig:sigs_vs_bearing}
   \centering
   \includegraphics[width=1.0\textwidth]{figures/sigs_vs_bearing.pdf}
 \end{figure}
 
-We will arbitrarily construct an example model where we set $C=1$, $B=.25$, $\phi_c=1$, and $\phi_b=135\degree$. Figure \ref{fig:sigs_vs_bearing} shows this model plotted as a function of bearing angle.
+We arbitrarily construct an example model where we set $C=1$, $B=.25$, $\phi_c=1$, and $\phi_b=135\degree$. Figure \ref{fig:sigs_vs_bearing} shows this model plotted as a function of bearing angle.
 
 Although a plot of amplitude vs angle is useful, a better way of visualizing the problem is to transform it to a phasor representation.  To do this, recall that
 \begin{align}
@@ -316,12 +323,12 @@ This lets us visualize the components of the measured signal as if they were two
 
 \begin{figure}[h]
   \caption{
-  The phasor representation of the example model from Figure \ref{fig:sigs_vs_bearing}. $s$ is the cable-signal phasor, $b$ the background phasor and $m$ the measured phasor.  The value we really care about is $\theta$, the angle between the measured and cable signals.  Note that we can only determine the magnitude of the angle, but not the sign.  The phasor relationships shown in solids lines are indistinguishable from those shown by the dashed lines.  This model provides no information for distinguishing between the $\pm\theta$ solutions}
+  The phasor representation of the example model from Figure \ref{fig:sigs_vs_bearing}. $s$ is the cable-signal phasor, $b$ the background phasor and $m$ the measured phasor.  The bearing-correction angle, $\theta$, is the angle between the measured and cable signals.  Note that we can only determine the magnitude of the angle, but not the sign.  The phasor relationships shown in solid lines are indistinguishable from those shown by the dashed lines.  This model provides no information for distinguishing between the $\pm\theta$ solutions}
   \label{fig:phasor_base}
   \centering
   \includegraphics[width=1.0\textwidth]{figures/phasor_base.pdf}
 \end{figure}
-Our objective is to find the bearing correction that must be applied to the measured signal in order to arrive at the true cable signal. In this representation, the correction angle, $\theta$ is readily obtained from the law of cosines.
+Our objective is to find the bearing correction that must be applied to the measured signal in order to arrive at the true cable signal. In this representation, the correction angle, $\theta$, is readily obtained from the law of cosines.
 \begin{equation} \label{eq:law_of_cos}
     \cos\left(\theta\right) = \frac{m^2 + s^2 - b^2}{2ms}
 \end{equation}
@@ -332,7 +339,7 @@ But since $\cos\left(\cdot\right)$ is an even function of its argument, we are u
 \end{equation}
 where
 \begin{align*}
-        \theta &= \text{The angle between the measured and cable signals}\\
+        \theta &= \text{the angle between the measured and cable signals}\\
         s &= \text{cable signal amplitude.}\\
         b &= \text{background signal amplitude} \\
         m &= \text{measured signal amplitude} \\
@@ -340,20 +347,20 @@ where
 
 
 \subsection{Placing Bounds on the Bearing Correction Angle}\label{section:angle_bounds}
-In this section we will show that the ratio of cable-signal to background-signal, ($s/b$) is the most important figure of merit for putting limits on the bearing-correction angle. The larger this ratio, the tighter the limits that can be placed on the bearing correction angle. We will further prove that there is no limit on the bearing-correction angle when $s/b < 1$.
+In this section we will show that the ratio of cable-signal to background-signal ($s/b$) is the most important figure of merit for putting limits on the bearing-correction angle. The larger this ratio, the tighter the limits. We will further prove that there is no limit on the bearing-correction angle when $s/b < 1$.
 
 
 
 
-Figure \ref{fig:angle_limits} shows phasor diagrams for two different configurations superimposed on each other.  The phasors drawn with solid lines represent a configuration where $s>b$.  The measurement phasor is given by the phasor sum, $m=s+b$.  Since $\alpha$, the angle between $s$ and $b$, can take on any value, the tip of the measurement phasor,  $m$, can lie anywhere on the the solid circle.  In this configuration, the bearing correction angle, $\theta$ is maximized when the measurement phasor, $m$ is tangent to the circle.  By inspecting the diagram and applying trigonometry we arrive at an expression that places limits on the bearing-correction angle, 
+Figure \ref{fig:angle_limits} shows phasor diagrams for two different configurations superimposed on each other.  The phasors drawn with solid lines represent a configuration where $s>b$.  The measurement is the phasor sum, $m=s+b$.  Since $\alpha$, the angle between $s$ and $b$, can take on any value, the tip of the measurement phasor,  $m$, can lie anywhere on the the solid circle.  In this configuration, the bearing correction angle, $\theta$, is maximized when the measurement phasor, $m$, is tangent to the circle.  By inspecting the diagram and applying trigonometry, we arrive at an expression that limits the bearing-correction angle: 
 \begin{equation} \label{eq:angle_limits}
     \left| \theta \right| \leq \sin^{-1}\left(\frac{b}{s}\right).
 \end{equation}
 
-The phasors drawn with dashed lines represent a configuration for $b > s$.  In this case the tip of the measurement vector can lie anywhere on the larger dashed circle.  As can be seen, this allows the bearing-correction angle, $\theta$ to be free to take on any value between $0\degree$ and $360\degree$.
+The phasors drawn with dashed lines represent a configuration for $b > s$.  In this case, the tip of the measurement vector can lie anywhere on the larger dashed circle.  As can be seen, this allows the bearing-correction angle, $\theta$, to take on any value between $0\degree$ and $360\degree$.
 
 \begin{figure}[H]
-  \caption{The phasor sums for two different conditions are shown here, one with solid lines, and the other with dashed lines.  In each case, the measured signal ($m$) is the phasor sum of the cable ($s$) and the background ($b$) signals. The angle between the cable and background signals ($\alpha$) can range between $0\degree$ and $360\degree$.  The solid circle represents the locus of all points reachable for fixed $b$ and $s$ when $b < s$.  $\theta$ is maximized when the measurement vector ($m$) is tangent to the circle.  The dashed circle shows the case for $b > s$.  Under these circumstances, there is no limit on $\theta$, which is free to range from  $0\degree$ and $360\degree$. 
+  \caption{The phasor sums for two different conditions are shown here, one with solid lines, and the other with dashed lines.  In each case, the measured signal ($m$) is the phasor sum of the cable ($s$) and the background ($b$) signals. The angle between the cable and background signals ($\alpha$) can range between $0\degree$ and $360\degree$.  The solid circle represents the locus of all points reachable for fixed $b$ and $s$ when $b < s$.  $\theta$ is maximized when the measurement vector ($m$) is tangent to the circle.  The dashed circle shows the case for $b > s$.  Under these circumstances, $\theta$ can range from  $0\degree$ to $360\degree$. 
   }
   \label{fig:angle_limits}
   \centering
@@ -363,26 +370,27 @@ The phasors drawn with dashed lines represent a configuration for $b > s$.  In t
 
     
 \section{Statistical Constraints on the Bearing Correction Angle}
-So far in this appendix we have been able to place limits on the bearing correction angle provided that we are able to reliably quantify the cable-signal to background-signal ratio.  In practice, this ratio is difficult to nail down exactly. The magnetic properties measured by the Acculocator can change as it is moved along the pipe.  This non-uniformity can cause both the cable-signal and background-signal to vary as the position of the instrument changes, and there is no way of coming up with an exact value for the signal-to-background ratio.  Under these circumstances, the best we can do is describe the cable and background signals with statistical distributions that model real-world variations.
+So far in this appendix we have been able to place limits on the bearing correction angle provided that we are able to reliably quantify the ratio between the cable and background signals.  In practice, this ratio is difficult to nail down exactly. The magnetic properties measured by the Acculocator can change as it is moved along the pipe.  This non-uniformity can cause both the cable and background signals to vary as the position of the instrument changes, and there is no way to determine an exact value for the signal-to-background ratio.  Under these circumstances, the best we can do is describe the cable and background signals with statistical distributions that model real-world variations.
 
-There are any number of statistical distributions we could use to model these variations, but here we select the gamma distribution.  Our primary motivation for selecting the Gamma distribution is that, like the amplitudes we are modeling, it is only defined for positive values.  We could have chosen any other distribution with this property, but the Gamma distribution is well understood and widely used.
+There are any number of statistical distributions we could use to model these variations, but here we select the Gamma distribution.  Like the amplitudes we are modeling, the Gamma distribution is only defined for positive values and can be uniquely specified with a mean and standard-deviation.  Any other distribution meeting these requirements could be used, but we believe the Gamma distribution is a reasonable choice.
 
-Having chosen to model the cable and background signals as Gamma distributions, we will use Monte-Carlo simulation to randomly draw values from our model distributions and propagate those draws through the algebra required to compute the corresponding bearing-correction angle for each draw.  In this way, we can build of a statistical distribution capable of placing probabilistic constraints on the bearing-correction angle.
+Having chosen to model the cable and background signals as Gamma distributions, we will use Monte-Carlo simulation (see Algorithm \ref{monte_algo}) to randomly draw values from our model distributions and propagate those draws through the algebra required to compute the corresponding bearing-correction
+\footnote{
+    A detail in Algorithm \ref{monte_algo} is not readily apparent and deserves a short explanation.  Given a measurement $m$, it is important to ensure that the random values we draw for $s$, and $b$ are able to form a valid triangle. We use the law of cosines, equation \ref{eq:law_of_cos},  and the fact that $\left|\cos\theta\right| <=1$ to derive the following constraint:
+    \begin{equation} \label{eq:bounds}
+          \left(m-s\right)^2 \leq b ^ 2 \leq \left(m + s\right)^2.  
+    \end{equation}
+    
+}.
+In this way, we can build a statistical distribution capable of placing probabilistic constraints on the bearing-correction angle.
+Fig. \ref{fig:correction_hist} shows a histogram of samples generated using Algorithm \ref{monte_algo}.
 
-Algorithm \ref{monte_algo} details the steps required to randomly sample from the bearing-correction angle.  A key step in this algorithm is ensuring that the random values we draw for $m$, $s$, and $b$ are able to form a valid triangle. We can use the law of cosines, equation \ref{eq:law_of_cos},  and the fact that $\left|\cos\theta\right| <=1$ to derive the following constraint
-\begin{equation} \label{eq:bounds}
-      \left(m-s\right)^2 \leq b ^ 2 \leq \left(m + s\right)^2.  
-\end{equation}
-
-By iterating algorithm \ref{monte_algo} many thousands of times, we can generate a histogram of the possible correction angles.  Fig. \ref{fig:correction_hist} shows such a histogram.  
-
-I SHOULD PROBABLY SHOW THE CDF AND THEN DEMONSTRATE USING CDF TO GIVE PROABILITY OF HITTING THE CABLE.
+The histogram of Figure \ref{fig:correction_hist} is useful from a qualitative perspective. The twin peaks, for example, starkly illustrate the model's inability to distinguish between positive and negative correction angles.  However, a plot of the empirical cumulative distribution function (ECDF) provides a far more useful visualization from which confidence bounds can be directly read. Figure \ref{fig:correction_ecdf} shows the ECDF corresponding to the histogram of Figure \ref{fig:correction_hist}.  The shaded regions correspond to the 1-$\sigma$ and 2-$\sigma$ confidence bounds containing $66\%$ and $95\%$ of the probability, respectively.
 
 
-
-\begin{figure}
+\begin{figure}[H]
   \caption{
-  A histogram of $10^5$ samples generated using algorithm \ref{monte_algo}.  For this simulation, we specified the cable-signal distribution with a mean and standard-deviation of $\mu_c=1900$, $\sigma_c=200$, and the background-signal distribution with a mean and standard-deviation of $\mu_b=900$, $\sigma_b=200$.  In this case the nominal signal-to-background ratio was $2.1$.  The double-hump in the histogram is driven by our inability to distinguish between the positive and negative sign in equation \ref{eq:theta_solution}. Notice how the nominal lower-bound on the signal-to-background is $1700/1100 \approx 1.5$.  Using Figure \ref{fig:max_error_graph}, we estimate the bearing-correction bounds to be $\approx40\degree$, which is consistent with range shown in this histogram. 
+  A histogram of $10^5$ samples generated using algorithm \ref{monte_algo}.  For this simulation, we specified the cable-signal distribution with a mean and standard-deviation of $\mu_s=1900$, $\sigma_s=200$, and the background-signal distribution with a mean and standard-deviation of $\mu_b=900$, $\sigma_b=200$.  In this case the nominal signal-to-background ratio was $2.1$.  The double-hump in the histogram is driven by our inability to distinguish between the positive and negative sign in equation \ref{eq:theta_solution}. Notice how the nominal lower bound on the signal-to-background is $1700/1100 \approx 1.5$.  Using Figure \ref{fig:max_error_graph}, we estimate the bearing-correction bounds to be $\approx40\degree$, which is consistent with the range shown in this histogram. 
   }
 
   
@@ -391,6 +399,18 @@ I SHOULD PROBABLY SHOW THE CDF AND THEN DEMONSTRATE USING CDF TO GIVE PROABILITY
   \includegraphics[width=1.0\textwidth]{figures/correction_hist.pdf}
 \end{figure}
 
+
+\begin{figure}[H]
+  \caption{
+  The empirical distribution function (ECDF) for the same samples shown in Figure \ref{fig:correction_hist}.  ECDF plots are useful for identifying confidence intervals.  For this example, the statistical model provides  $95\%$ confidence that the bearing correction angle will fall within $\pm 37\degree$, and  $66\%$ confidence that it will fall within $\pm 28\degree$.
+  }
+  \label{fig:correction_ecdf}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/correction_ecdf.pdf}
+\end{figure}
+
+
+\pagebreak
 \begin{algorithm}[H] \label{monte_algo}
 \SetAlgoLined
 \KwResult{Random samples drawn from distribution of bearing correction angles }
@@ -429,28 +449,25 @@ I SHOULD PROBABLY SHOW THE CDF AND THEN DEMONSTRATE USING CDF TO GIVE PROABILITY
  \caption{Bearing correction Monte-Carlo sampling.}
 \end{algorithm}
 
-\section{Actual Python Code}
-Here is some code
 \pagebreak
+\section{Algorithm Implementation}
+We chose to implement Algorithm \ref{monte_algo} using the Python language.  Python offers excellent support for data-processing, statistics, and visualization.  We employed the widely-used array-processing and mathematics libraries \texttt{numpy} and \texttt{scipy}, which, due to their array-processing paradigm,  cause the implementation to look quite different from the algorithm pseudo-code.  This section contains our Python implementation of the sampling algorithm.
+
+\subsection{Python Code}
+
 \begin{python}
 from scipy.stats import gamma, bernoulli
 import numpy as np
 
-def sample_amplitude(mu: float, sigma: float, N: int):
-    # Compute the gamma parameters that will have the desired
-    # mean and standard deviation
+def sample_amplitude(mu, sigma, N):
     a = (mu / sigma) ** 2
     scale = sigma ** 2 / mu
-
-    # Generate the random variables.
     gam = gamma(a, scale=scale)
-    x = gam.rvs(size=N)
-    return x
+    return gam.rvs(size=N)
 
-def sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100):
-    x_list = []
-    n_samples = N
-    n_iter = 0
+def sample_angle(
+        measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100):
+    x_list, n_samples, n_iter = [], N, 0
     while n_samples > 0 and n_iter < max_iter:
         signal = sample_amplitude(sig_mu, sig_std, n_samples)
         background = sample_amplitude(back_mu, back_std, n_samples)
@@ -467,21 +484,13 @@ def sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100):
         n_samples = int(2 * (N - len(x_list)))
         n_iter += 1
     if n_iter >= max_iter:
-        raise ValueError(
-            'MaxIter encounterd.  '
-            'You probably set a model that is incompatible with measurement')
+        raise ValueError('MaxIter encounterd.')
     return 180 * np.array(x_list[:N]) / np.pi
 
-# Specify the parameters
-measured = 2000
-sig_mu=1900
-back_mu=900 
-sig_std = 200
-back_std = 200
-N = 100000
-
-# Generate the samples
-samples = sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100)
+samples = sample_angle(
+    measured=2000, sig_mu=1900, sig_std=200, back_mu=900, back_std=200,
+    N=100000, max_iter=100
+)
 \end{python}
 
 
