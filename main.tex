@@ -377,7 +377,7 @@ Having chosen to model the cable and background signals as Gamma distributions, 
 In this way, we can build of a statistical distribution capable of placing probabilistic constraints on the bearing-correction angle.
 Fig. \ref{fig:correction_hist} shows such a histogram.  
 
-The histogram of Figure \ref{fig:correction_hist} is useful from a qualitative perspective. The twin peaks, for example, starkly illustrate the model's inability to distinguish between positive and negative correction angles.  However, a plot of the emperical cumulative distribution function provides a far more useful visualization from which confidence bounds can be directly read. Figure \ref{fig:correction_ecdf} shows the ECDF corresponding to the histogram of Figure \ref{fig:correction_hist}.  The shaded regions correspond to the 1-$\sigma$ and 2-$\sigma$ confidence bounds of $\pm 66\%$ and $\pm 95\%$ respectively.
+The histogram of Figure \ref{fig:correction_hist} is useful from a qualitative perspective. The twin peaks, for example, starkly illustrate the model's inability to distinguish between positive and negative correction angles.  However, a plot of the empirical cumulative distribution function (ECDF) provides a far more useful visualization from which confidence bounds can be directly read. Figure \ref{fig:correction_ecdf} shows the ECDF corresponding to the histogram of Figure \ref{fig:correction_hist}.  The shaded regions correspond to the 1-$\sigma$ and 2-$\sigma$ confidence bounds of $\pm 66\%$ and $\pm 95\%$ respectively.
 
 
 \begin{figure}[H]
@@ -441,28 +441,25 @@ The histogram of Figure \ref{fig:correction_hist} is useful from a qualitative p
  \caption{Bearing correction Monte-Carlo sampling.}
 \end{algorithm}
 
-\section{Actual Python Code}
-Shown below is a bunch of code that I need to talk about.
 \pagebreak
+\section{Algorithm Implementation}
+We chose to implement Algorithm \ref{monte_algo} using the Python language.  Python offers excellent support for data-processing, statistics, and visualization.  We employed the widely used array-processing and mathematics libraries \texttt{numpy} and \texttt{scipy}, which, due to their array-processing paradigm,  cause the implementation to look quite different from the algorithm pseudo-code.  For completeness, this section contains our Python implementation of the sampling algorithm.
+
+\subsection{Python Code}
+
 \begin{python}
 from scipy.stats import gamma, bernoulli
 import numpy as np
 
-def sample_amplitude(mu: float, sigma: float, N: int):
-    # Compute the gamma parameters that will have the desired
-    # mean and standard deviation
+def sample_amplitude(mu, sigma, N):
     a = (mu / sigma) ** 2
     scale = sigma ** 2 / mu
-
-    # Generate the random variables.
     gam = gamma(a, scale=scale)
-    x = gam.rvs(size=N)
-    return x
+    return gam.rvs(size=N)
 
-def sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100):
-    x_list = []
-    n_samples = N
-    n_iter = 0
+def sample_angle(
+        measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100):
+    x_list, n_samples, n_iter = [], N, 0
     while n_samples > 0 and n_iter < max_iter:
         signal = sample_amplitude(sig_mu, sig_std, n_samples)
         background = sample_amplitude(back_mu, back_std, n_samples)
@@ -479,21 +476,13 @@ def sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100):
         n_samples = int(2 * (N - len(x_list)))
         n_iter += 1
     if n_iter >= max_iter:
-        raise ValueError(
-            'MaxIter encounterd.  '
-            'You probably set a model that is incompatible with measurement')
+        raise ValueError('MaxIter encounterd.')
     return 180 * np.array(x_list[:N]) / np.pi
 
-# Specify the parameters
-measured = 2000
-sig_mu=1900
-back_mu=900 
-sig_std = 200
-back_std = 200
-N = 100000
-
-# Generate the samples
-samples = sample_angle(measured, sig_mu, sig_std, back_mu, back_std, N, max_iter=100)
+samples = sample_angle(
+    measured=2000, sig_mu=1900, sig_std=200, back_mu=900, back_std=200,
+    N=100000, max_iter=100
+)
 \end{python}
 
 
