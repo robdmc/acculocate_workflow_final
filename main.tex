@@ -367,20 +367,20 @@ So far in this appendix we have been able to place limits on the bearing correct
 
 There are any number of statistical distributions we could use to model these variations, but here we select the gamma distribution.  Our primary motivation for selecting the Gamma distribution is that, like the amplitudes we are modeling, it is only defined for positive values.  We could have chosen any other distribution with this property, but the Gamma distribution is well understood and widely used.
 
-Having chosen to model the cable and background signals as Gamma distributions, we will use Monte-Carlo simulation to randomly draw values from our model distributions and propagate those draws through the algebra required to compute the corresponding bearing-correction angle for each draw.  In this way, we can build of a statistical distribution capable of placing probabilistic constraints on the bearing-correction angle.
+Having chosen to model the cable and background signals as Gamma distributions, we will use Monte-Carlo simulation (see Algorithm \ref{monte_algo}) to randomly draw values from our model distributions and propagate those draws through the algebra required to compute the corresponding bearing-correction angle for each draw \footnote{
+    There is a detail in Algorithm \ref{monte_algo} is not readily apparent and deserves a short explanation.  It is important to ensure that the random values we draw for $m$, $s$, and $b$ are able to form a valid triangle. We use the law of cosines, equation \ref{eq:law_of_cos},  and the fact that $\left|\cos\theta\right| <=1$ to derive the following constraint
+    \begin{equation} \label{eq:bounds}
+          \left(m-s\right)^2 \leq b ^ 2 \leq \left(m + s\right)^2.  
+    \end{equation}
+    
+}.
+In this way, we can build of a statistical distribution capable of placing probabilistic constraints on the bearing-correction angle.
+Fig. \ref{fig:correction_hist} shows such a histogram.  
 
-Algorithm \ref{monte_algo} details the steps required to randomly sample from the bearing-correction angle.  A key step in this algorithm is ensuring that the random values we draw for $m$, $s$, and $b$ are able to form a valid triangle. We can use the law of cosines, equation \ref{eq:law_of_cos},  and the fact that $\left|\cos\theta\right| <=1$ to derive the following constraint
-\begin{equation} \label{eq:bounds}
-      \left(m-s\right)^2 \leq b ^ 2 \leq \left(m + s\right)^2.  
-\end{equation}
-
-By iterating algorithm \ref{monte_algo} many thousands of times, we can generate a histogram of the possible correction angles.  Fig. \ref{fig:correction_hist} shows such a histogram.  
-
-I SHOULD PROBABLY SHOW THE CDF AND THEN DEMONSTRATE USING CDF TO GIVE PROABILITY OF HITTING THE CABLE.
+The histogram of Figure \ref{fig:correction_hist} is useful from a qualitative perspective. The twin peaks, for example, starkly illustrate the model's inability to distinguish between positive and negative correction angles.  However, a plot of the emperical cumulative distribution function provides a far more useful visualization from which confidence bounds can be directly read. Figure \ref{fig:correction_ecdf} shows the ECDF corresponding to the histogram of Figure \ref{fig:correction_hist}.  The shaded regions correspond to the 1-$\sigma$ and 2-$\sigma$ confidence bounds of $\pm 66\%$ and $\pm 95\%$ respectively.
 
 
-
-\begin{figure}
+\begin{figure}[H]
   \caption{
   A histogram of $10^5$ samples generated using algorithm \ref{monte_algo}.  For this simulation, we specified the cable-signal distribution with a mean and standard-deviation of $\mu_c=1900$, $\sigma_c=200$, and the background-signal distribution with a mean and standard-deviation of $\mu_b=900$, $\sigma_b=200$.  In this case the nominal signal-to-background ratio was $2.1$.  The double-hump in the histogram is driven by our inability to distinguish between the positive and negative sign in equation \ref{eq:theta_solution}. Notice how the nominal lower-bound on the signal-to-background is $1700/1100 \approx 1.5$.  Using Figure \ref{fig:max_error_graph}, we estimate the bearing-correction bounds to be $\approx40\degree$, which is consistent with range shown in this histogram. 
   }
@@ -391,6 +391,18 @@ I SHOULD PROBABLY SHOW THE CDF AND THEN DEMONSTRATE USING CDF TO GIVE PROABILITY
   \includegraphics[width=1.0\textwidth]{figures/correction_hist.pdf}
 \end{figure}
 
+
+\begin{figure}[H]
+  \caption{
+  The empirical distribution function (ECDF) for the same samples shown in Figure \ref{fig:correction_hist}.  ECDF plots are useful for identifying confidence intervals.  The statistical model provides  $95\%$ confidence that the bearing correction angle will fall within $\pm 37\degree$, and  $66\%$ confidence that it will fall within $\pm 28\degree$.
+  }
+  \label{fig:correction_ecdf}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/correction_ecdf.pdf}}
+\end{figure}
+
+
+\pagebreak
 \begin{algorithm}[H] \label{monte_algo}
 \SetAlgoLined
 \KwResult{Random samples drawn from distribution of bearing correction angles }
@@ -430,7 +442,7 @@ I SHOULD PROBABLY SHOW THE CDF AND THEN DEMONSTRATE USING CDF TO GIVE PROABILITY
 \end{algorithm}
 
 \section{Actual Python Code}
-Here is some code
+Shown below is a bunch of code that I need to talk about.
 \pagebreak
 \begin{python}
 from scipy.stats import gamma, bernoulli
