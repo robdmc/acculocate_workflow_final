@@ -376,7 +376,7 @@ There are any number of statistical distributions we could use to model these va
 
 Having chosen to model the cable and background signals as Gamma distributions, we will use Monte-Carlo simulation (see Algorithm \ref{monte_algo}) to randomly draw values from our model distributions and propagate those draws through the algebra required to compute the corresponding bearing-correction
 \footnote{
-    A detail in Algorithm \ref{monte_algo} is not readily apparent and deserves a short explanation.  It is important to ensure that the random values we draw for $m$, $s$, and $b$ are able to form a valid triangle. We use the law of cosines, equation \ref{eq:law_of_cos},  and the fact that $\left|\cos\theta\right| <=1$ to derive the following constraint:
+    A detail in Algorithm \ref{monte_algo} is not readily apparent and deserves a short explanation.  Given a measurement $m$, it is important to ensure that the random values we draw for $s$, and $b$ are able to form a valid triangle. We use the law of cosines, equation \ref{eq:law_of_cos},  and the fact that $\left|\cos\theta\right| <=1$ to derive the following constraint:
     \begin{equation} \label{eq:bounds}
           \left(m-s\right)^2 \leq b ^ 2 \leq \left(m + s\right)^2.  
     \end{equation}
