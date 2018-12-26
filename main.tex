@@ -282,7 +282,7 @@ For point and shoot jobs, this calculation can be part of the jobsite workflow a
 \subsection{The Bearing Correction}
 The signal measured within the pipe will vary as a function of angle.  We can break down the source of this signal into two components.  The first component we will call the ``cable signal.''  This is the signal variation caused by the presence of the cable attached to the outside of the pipe.  The second component we will call the ``background signal,'' which arises from all other sources of angular asymmetry in the system.  This is thought to be dominated by imperfect centering of the instrument within the pipe.
 
-\par We model both the background and the cable signals as if they were sinusoidal function. The total measured signal is then given by
+\par We model both the background and the cable signals as if they are sinusoidal functions. The total measured signal is then given by
 
 \begin{equation} \label{eq:trig_sig}
     s = C \sin\left(\theta + \phi_c\right) + B \sin\left(\theta + \phi_b\right),
@@ -298,7 +298,7 @@ where
 
 
 \begin{figure}[H]
-  \caption{An Example Model.  In this example, we arbitrarily choose amplitudes and phases for the cable and background components such that  $s = \sin\theta + 0.25 \sin\left(\theta -135\degree\right)$
+  \caption{An example model.  In this example, we arbitrarily choose amplitudes and phases for the cable and background components such that  $s = \sin\theta + 0.25 \sin\left(\theta -135\degree\right)$
   }
   \label{fig:sigs_vs_bearing}
   \centering
@@ -375,9 +375,9 @@ Having chosen to model the cable and background signals as Gamma distributions, 
     
 }.
 In this way, we can build of a statistical distribution capable of placing probabilistic constraints on the bearing-correction angle.
-Fig. \ref{fig:correction_hist} shows such a histogram.  
+Fig. \ref{fig:correction_hist} shows such a histogram of our statistically modeled bearing-angle correction.  
 
-The histogram of Figure \ref{fig:correction_hist} is useful from a qualitative perspective. The twin peaks, for example, starkly illustrate the model's inability to distinguish between positive and negative correction angles.  However, a plot of the empirical cumulative distribution function (ECDF) provides a far more useful visualization from which confidence bounds can be directly read. Figure \ref{fig:correction_ecdf} shows the ECDF corresponding to the histogram of Figure \ref{fig:correction_hist}.  The shaded regions correspond to the 1-$\sigma$ and 2-$\sigma$ confidence bounds of $\pm 66\%$ and $\pm 95\%$ respectively.
+The histogram of Figure \ref{fig:correction_hist} is useful from a qualitative perspective. The twin peaks, for example, starkly illustrate the model's inability to distinguish between positive and negative correction angles.  However, a plot of the empirical cumulative distribution function (ECDF) provides a far more useful visualization from which confidence bounds can be directly read. Figure \ref{fig:correction_ecdf} shows the ECDF corresponding to the histogram of Figure \ref{fig:correction_hist}.  The shaded regions correspond to the 1-$\sigma$ and 2-$\sigma$ confidence bounds containing $66\%$ and $95\%$ of the probability respectively.
 
 
 \begin{figure}[H]
