@@ -97,7 +97,7 @@ This document describes the workflow to estimate the angular bounds to prevent d
 The instrumentation of a well with sensors such as fiber optic cables is critical to understand, control, and optimize production.  However, perforating the casing risks damaging cables that are deployed behind casing.  The current industry practice is to deploy cable along side ferromagnetic material such as steel wire rope or the Acculocate technology and use magnetic orientation tools to locate the ferromagnetic material and thus the angular position of the cable behind the casing.  
 
 \paragraph{}
-In developing the Acculocate technology, we discovered that the reported angle can be biased by environmental factors and is not necessarily the true cable location.  This background signal can be characterized by making measurements on the casing without the cable attached.  The main factors influencing the background signal are how much the tool is off-centered and wall thickness variations.  The degree of angular error depends on the relative strength of the cable and background signals as measured by the magnetic orientation tool.  A theoretical model was developed to account for the effect of this background on the measured signal and can be used to estimate the angular bounds of the cable.  The theoretical model is detailed in the appendix.
+In developing the Acculocate technology, we discovered that the reported angle can be biased by environmental factors and is not necessarily the true cable location.  This background signal can be characterized by making measurements on the casing without the cable attached.  The main factors influencing the background signal are how much the tool is off-centered and wall thickness variations.  The degree of angular error depends on the relative strength of the cable and background signals as measured by the magnetic orientation tool.  A theoretical model was developed to account for the effect of this background on the measured signal and can be used to estimate the angular bounds of the cable.  
 
 \subsection{Workflow objective}
 The objectives of the workflow outlined in this document are:
@@ -109,7 +109,7 @@ The objectives of the workflow outlined in this document are:
 More specifically, the workflow estimates the uncertainty in the cable position caused by the background to give a higher confidence in setting damage-free perforation angles.  The workflow is detailed step by step and follows the flow chart in Fig. \ref{fig:flowchart}.  The output of the workflow is the "no perforation zone" (NPZ) which is the estimated angular bounds of the cable position.  Fig. \ref{fig:well_schematic} shows a schematic of the NPZ.
 
 \paragraph{}
-The workflow include calculations, cable selection, yard test calibrations, and in well measurements.  A template spreadsheet is provided for recording the measurements and performing the calculations.  The workflow is applicable for both point and shoot and map and shoot jobs.      
+The workflow include calculations, cable selection, yard test calibrations, and in well measurements.  A template spreadsheet is provided for recording the measurements and performing the calculations.  The workflow is applicable for both point and shoot and map and shoot jobs. The theoretical model used in the calculations is detailed in the Appendix.  Also detailed in the Appendix is a method to add to the calculations statistical uncertainties once sufficient data is collected.
 
 \begin{figure}[h!]
     \caption{Flow chart of the workflow to determine the no perforation zone.}
@@ -220,7 +220,7 @@ Using these measurements from the yard test, we can calculate the cable and back
 \paragraph{}
 The background signal value is an average of blank casing measurements.  The cable signal strength is calculated for each measurement using
 \begin{equation}
-    s = m \cos\left(\theta_s-\theta_m\right) - b\cos\left( \theta_s-\theta_b\right)
+    s = m \cos\left(\phi_s-\phi_m\right) - b\cos\left( \phi_s-\phi_b\right)
 \end{equation}
 
 where 
@@ -228,9 +228,9 @@ where
     s &= \text{cable signal amplitude}\\
     b &= \text{background signal amplitude}\\
     m &= \text{measured signal amplitude}\\
-    \theta_s &= \text{cable angle}\\
-    \theta_b &= \text{background angle}\\
-    \theta_m &= \text{measured angle.}\\
+    \phi_s &= \text{cable angle}\\
+    \phi_b &= \text{background angle}\\
+    \phi_m &= \text{measured angle.}\\
 \end{align*}
 
 \paragraph{}
@@ -249,7 +249,7 @@ If a selecting a new cable or centralizer is not feasible, there are two alterna
 \section{Step 6: In well measurement}
 Based on the results of the yard test and calculations, the selected Acculocate cable should be deployed with the casing.  When the perforating jobs are scheduled, the same magnetic orientation tool, measurement parameters, and centralizers from the yard test should also be used.  At each measurement depth, record the measured span and angle.  They can be recorded in the template spreadsheet.  If possible, also acquire the LAS file for each measurement depth.  Note if the measurement depth is near a collar.  They can significantly impact the measurement, increasing the uncertainty of the cable location.  
 
-\section{Step 7: Calculate no perforation zone}
+\section{Step 7: Calculate no perforation zone}\label{section:step_7}
 With the measured span and angle, the NPZ can be calculated using Eq.\ref{eq:theta_solution}.  This calculation is provided within the template spreadsheet.  This will be $\pm$ of the measured angle, and its range may be less than the maximum angular error calculated in Step 5.  The perforations should then be directed away from the calculated NPZ. 
 
 \paragraph{}
@@ -285,41 +285,37 @@ For point and shoot jobs, this calculation can be part of the jobsite workflow a
 
 \begin{appendices}
 
-\section{Estimating the Bearing Correction}
-\subsection{The Bearing Correction}
-The signal measured within the pipe will vary as a function of angle.  We can break down the source of this signal into two components.  The first component we will call the ``cable signal.''  This is the signal variation caused by the presence of the cable attached to the outside of the pipe.  The second component we will call the ``background signal,'' which arises from all other sources of angular asymmetry in the system.  This is thought to be dominated by imperfect centering of the instrument within the pipe.
+\section{Theoretical Model}
+\subsection{Modeling the magnetic orientation tool measurement}
+The signal measured by the magnetic orientation tool within the casing varies as a function of the angular orientation.  We  break down the source of this signal into two components.  The first component we call the ``cable signal.''  This is the signal variation caused by the presence of the cable attached to the outside of the casing.  The second component we call the ``background signal,'' which arises from all other sources of angular asymmetry in the system.  This is thought to be dominated by imperfect centering of the instrument within the casing or variations in wall thickness.
 
-\par We model both the background and the cable signals as if they are sinusoidal functions. The total measured signal is then given by
+\paragraph{} 
+We model both the background and the cable signals as sinusoidal functions. The total signal measured by the tool $M$ is then given by
 
 \begin{equation} \label{eq:trig_sig}
-    s = C \sin\left(\theta + \phi_c\right) + B \sin\left(\theta + \phi_b\right),
+    M = s \sin\left(\chi + \phi_c\right) + b \sin\left(\chi + \phi_b\right),
 \end{equation}
 where
 \begin{align*}
-        S &= \text{total signal amplitude} \\
-        C &= \text{cable signal amplitude} \\
-        B &= \text{background signal amplitude.} \\
-        \phi_c &= \text{the phase of the cable signal}\\
+        s &= \text{cable signal amplitude} \\
+        b &= \text{background signal amplitude.} \\
+        \phi_s &= \text{the phase of the cable signal}\\
         \phi_b &= \text{the phase of the background signal}\\
+        \chi &= \text{relative bearing as measured by the tool}\\
 \end{align*}
 
-
-\begin{figure}[H]
-  \caption{An example model.  In this example, we arbitrarily choose amplitudes and phases for the cable and background components such that  $s = \sin\theta + 0.25 \sin\left(\theta -135\degree\right)$
+\begin{figure}[h!]
+  \caption{An example model of the cable, background, and total signal measured by the magnetic orientation tool as a function of angular orientation $\theta$, where $M = \sin\theta + 0.25 \sin\left(\theta -135\degree\right)$
   }
   \label{fig:sigs_vs_bearing}
   \centering
   \includegraphics[width=1.0\textwidth]{figures/sigs_vs_bearing.pdf}
 \end{figure}
 
-We arbitrarily construct an example model where we set $C=1$, $B=.25$, $\phi_c=1$, and $\phi_b=135\degree$. Figure \ref{fig:sigs_vs_bearing} shows this model plotted as a function of bearing angle.
+Figure \ref{fig:sigs_vs_bearing} shows an example model plotted as a function of bearing angle $\theta$.  In this example, we set $s=1$, $b=.25$, $\phi_s=1$, and $\phi_b=135\degree$. It an be readily seen that the angular position of the measurement peak is shifted from the true position of the cable peak by the background signal.  
 
-Although a plot of amplitude vs angle is useful, a better way of visualizing the problem is to transform it to a phasor representation.  To do this, recall that
-\begin{align}
-        \cos{\theta} &= Re\left(e^{i\theta}\right) \\
-        \sin{\theta} &= Im\left(e^{i\theta}\right). \\
-\end{align}
-This lets us visualize the components of the measured signal as if they were two-dimensional vectors in the complex plane, (i.e. phasors). Fig. \ref{fig:phasor_base} shows our example problem visualized with phasors.
+\subsection{The Bearing Correction}
+The degree to which the measurement peak is shifted, which we call the ``bearing correction", can be calculated by transforming the problem into a phasor representation.  This lets us visualize the components of the measured signal as if they were two-dimensional vectors in the complex plane, (i.e. phasors). Fig. \ref{fig:phasor_base} shows our example problem visualized with phasors.
 
 \begin{figure}[h]
   \caption{
@@ -328,7 +324,9 @@ This lets us visualize the components of the measured signal as if they were two
   \centering
   \includegraphics[width=1.0\textwidth]{figures/phasor_base.pdf}
 \end{figure}
-Our objective is to find the bearing correction that must be applied to the measured signal in order to arrive at the true cable signal. In this representation, the correction angle, $\theta$, is readily obtained from the law of cosines.
+
+\paragraph{}
+ In this representation, the correction angle, $\theta$, is readily obtained from the law of cosines.
 \begin{equation} \label{eq:law_of_cos}
     \cos\left(\theta\right) = \frac{m^2 + s^2 - b^2}{2ms}
 \end{equation}
@@ -344,20 +342,20 @@ where
         b &= \text{background signal amplitude} \\
         m &= \text{measured signal amplitude} \\
 \end{align*}
+Eq.~\ref{eq:theta_solution} sets the range of the NPZ calculated in Section~\ref{section:step_7}.  
 
 
 \subsection{Placing Bounds on the Bearing Correction Angle}\label{section:angle_bounds}
 In this section we will show that the ratio of cable-signal to background-signal ($s/b$) is the most important figure of merit for putting limits on the bearing-correction angle. The larger this ratio, the tighter the limits. We will further prove that there is no limit on the bearing-correction angle when $s/b < 1$.
 
-
-
-
+\paragraph{}
 Figure \ref{fig:angle_limits} shows phasor diagrams for two different configurations superimposed on each other.  The phasors drawn with solid lines represent a configuration where $s>b$.  The measurement is the phasor sum, $m=s+b$.  Since $\alpha$, the angle between $s$ and $b$, can take on any value, the tip of the measurement phasor,  $m$, can lie anywhere on the the solid circle.  In this configuration, the bearing correction angle, $\theta$, is maximized when the measurement phasor, $m$, is tangent to the circle.  By inspecting the diagram and applying trigonometry, we arrive at an expression that limits the bearing-correction angle: 
 \begin{equation} \label{eq:angle_limits}
     \left| \theta \right| \leq \sin^{-1}\left(\frac{b}{s}\right).
 \end{equation}
 
-The phasors drawn with dashed lines represent a configuration for $b > s$.  In this case, the tip of the measurement vector can lie anywhere on the larger dashed circle.  As can be seen, this allows the bearing-correction angle, $\theta$, to take on any value between $0\degree$ and $360\degree$.
+\paragraph{}
+The phasors drawn with dashed lines represent a configuration for $b > s$.  In this case, the tip of the measurement vector can lie anywhere on the larger dashed circle.  As can be seen, this allows the bearing-correction angle, $\theta$, to take on any value between $0\degree$ and $360\degree$.  Physically, this can be understood in the scenario where the background is oriented 180\textsuperscript{o} away from the cable. 
 
 \begin{figure}[H]
   \caption{The phasor sums for two different conditions are shown here, one with solid lines, and the other with dashed lines.  In each case, the measured signal ($m$) is the phasor sum of the cable ($s$) and the background ($b$) signals. The angle between the cable and background signals ($\alpha$) can range between $0\degree$ and $360\degree$.  The solid circle represents the locus of all points reachable for fixed $b$ and $s$ when $b < s$.  $\theta$ is maximized when the measurement vector ($m$) is tangent to the circle.  The dashed circle shows the case for $b > s$.  Under these circumstances, $\theta$ can range from  $0\degree$ to $360\degree$. 
